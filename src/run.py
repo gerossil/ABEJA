@@ -3,7 +3,7 @@ import numpy as np
 from tqdm import tqdm
 
 def main():
-    chemin_video = "C:\\Users\\DEPTEC\\Documents\\ABEJA\\videos\\Bees-Cajica-1.MOV"
+    chemin_video = "C:\\Users\\DEPTEC\\Documents\\ABEJA\\videos\\nido.mp4"
 
     # Ouvrir la vidéo
     capture = cv2.VideoCapture(chemin_video)
@@ -19,10 +19,14 @@ def main():
     height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     # Create the VideoWriter object
-    video = cv2.VideoWriter('db0.wmv', cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+    video = cv2.VideoWriter('toto.mp4', cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+
+    x = 0 
 
     with tqdm(total=total_frames, desc='Processing frames') as pbar:
-        while capture.isOpened():
+        #while capture.isOpened():
+        while x < 10 :
+            x += 1
             # Lire la frame
             ret, frame = capture.read()
 
@@ -35,9 +39,7 @@ def main():
                 gray_blurred = cv2.blur(gray, (15, 15))
 
                 # Apply Hough transform on the blurred image.
-                detected_circles = cv2.HoughCircles(gray_blurred,
-                                                    cv2.HOUGH_GRADIENT, 1, 20, param1=50,
-                                                    param2=25, minRadius=5, maxRadius=50)
+                detected_circles = cv2.HoughCircles(gray_blurred, cv2.HOUGH_GRADIENT, 1, 1, param1=50, param2=25, minRadius=0, maxRadius=50)
 
                 # Draw circles that are detected.
                 if detected_circles is not None:

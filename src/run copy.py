@@ -1,42 +1,55 @@
 import cv2
 import numpy as np
+#from yolov3.yolov3_detector import YOLOv3Detector
 
 def main():
-    #chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\Bees-Cajica-1.MOV"
+    # Load YOLOv3 detector
+    detector = YOLOv3Detector()
 
-    image = cv2.imread("C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\photo\\pantalla.png", 0)  # Chargez l'image en niveaux de gris
+    # Load the video
+    video_path = "C:\\Users\\DEPTEC\\Documents\\ABEJA\\videos\\Bees-Cajica-1.MOV"
+    video = cv2.VideoCapture(video_path)
 
-    image = cv2.GaussianBlur(image, (5, 5), 0)  # Appliquez un flou gaussien pour réduire le bruit
+    # Get video properties
+    frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frame_rate = video.get(cv2.CAP_PROP_FPS)
 
-    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, dp=1, minDist=50, param1=50, param2=25, minRadius=100, maxRadius=1000)
+    # Create output video writer
+    output_path = "output/video_output.mp4"
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    output_video = cv2.VideoWriter(output_path, fourcc, frame_rate, (frame_width, frame_height))
 
+    while video.isOpened():
+        # Read a frame from the video
+        ret, frame = video.read()
 
-    
-    # Draw circles that are detected.
-    if circles is not None:
-    
-        # Convert the circle parameters a, b and r to integers.
-        detected_circles = np.uint16(np.around(circles))
-    
-        for pt in detected_circles[0, :]:
-            a, b, r = pt[0], pt[1], pt[2]
-    
-            # Draw the circumference of the circle.
-            cv2.circle(image, (a, b), r, (0, 255, 0), 2)
-    
-            # Draw a small circle (of radius 1) to show the center.
-            #cv2.circle(image, (a, b), 1, (0, 0, 255), 3)
+        if not ret:
+            break
 
-            
-    cv2.imshow("Detected Circle", image)
-    cv2.waitKey(0)
+        # Perform circle detection using YOLO
+        detections = detector.detect(frame)
 
+        # Filter detections to keep only circles
+        circles = [d for d in detections if d["class_id"] == 0]
 
-      
+        # Draw circles on the frame
+        for circle in circles:
+            x, y, w, h = circle["bbox"]
+            cv2.circle(frame, (int(x + w / 2), int(y + h / 2)), int(w / 2), (0, 255, 0), 2)
 
-if __name__ == "__main__":
+        # Write the frame with circles to the output video
+        output_video.write(frame)
+
+        # Display the frame (optional)
+        cv2.imshow("Circle Detection", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    # Release resources
+    video.release()
+    output_video.release()
+    cv2.destroyAllWindows()
+
+if __name__ == '__main__':
     main()
-
-
-
-    
