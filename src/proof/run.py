@@ -9,20 +9,6 @@ class Circle:
         self.y = y
         self.radius = radius
 
-    def isPointInside(self, point_x, point_y):
-        print("le cercle x : " + str(point_x) + ", y : " + str(point_y) + " est il dans self x : " + str(self.x) + ", self y : " + str(self.y) + ", self r : " + str(self.radius))
-
-        dist_x = point_x - self.x if point_x > self.x else self.x - point_x
-        dist_y = point_y - self.y if point_y > self.y else self.y - point_y
-        print("dist_x : " + str(dist_x) + " dist_y : " + str(dist_y))
-
-        distance = dist_x**2 + dist_y**2
-        #distance = ((point_x - self.x)^2) + ((point_y - self.y)^2)
-        print("distance : " + str(distance) + " radius : " + str(self.radius))
-        print(str(distance <= self.radius**2))
-        return distance <= self.radius**2
-    
-    
     def areCirclesSuperimposed(self, point_x, point_y, radius):
         dist_x = point_x - self.x if point_x > self.x else self.x - point_x
         dist_y = point_y - self.y if point_y > self.y else self.y - point_y
@@ -36,7 +22,7 @@ class Circle:
             return False
 
 def main():
-    heure_debut = time.time()
+    start_time = time.time()
     chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\CuartaToma.mp4"
 
     # Ouvrir la vidéo
@@ -87,7 +73,7 @@ def main():
                     else:
                         inside = False
                         for circle in circles_tab:
-                            if circle.areCirclesSuperimposed(a,b,r):# or circle.isPointInside(a,b):
+                            if circle.areCirclesSuperimposed(a,b,r):
                                 inside = True
                                 break
                         
@@ -102,10 +88,10 @@ def main():
 
                 # Sauvegarder la frame en tant qu'image
     #cv2.imwrite("premiere_frame2.jpg", first_frame)
-    heure_fin = time.time()
+    end_time = time.time()
 
-    temps = heure_fin - heure_debut
-    print("time: ", temps)
+    exec_time = end_time - start_time
+    print("exec_time : ", exec_time)
 
     cv2.imshow("Detected Circle", first_frame)
     cv2.waitKey(0)
