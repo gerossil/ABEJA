@@ -23,7 +23,7 @@ class Circle:
 
 def main():
     start_time = time.time()
-    chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\CuartaToma.mp4"
+    chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\Bees-Cajica-1.MOV"
 
     # Ouvrir la vidéo
     capture = cv2.VideoCapture(chemin_video)
