@@ -34,7 +34,7 @@ def main():
 
     circles_tab = []
     
-    for i in range(20):
+    for i in range(10):
         ret, frame = capture.read()
 
         # Vérifier si la lecture de la frame a réussi
@@ -44,12 +44,12 @@ def main():
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
             # Blur using 3 * 3 kernel.
-            gray_blurred = cv2.blur(gray, (15, 15))
+            gray_blurred = cv2.blur(gray, (14, 14))
 
             # Apply Hough transform on the blurred image.
             detected_circles = cv2.HoughCircles(gray_blurred, 
                             cv2.HOUGH_GRADIENT, 1, 20, param1 = 50,
-                        param2 = 25, minRadius = 1, maxRadius = 50)
+                        param2 = 25, minRadius = 0, maxRadius = 50)
             
             # Draw circles that are detected.
             if detected_circles is not None:
@@ -89,9 +89,10 @@ def main():
                 # Sauvegarder la frame en tant qu'image
     #cv2.imwrite("premiere_frame2.jpg", first_frame)
     end_time = time.time()
-
     exec_time = end_time - start_time
+
     print("exec_time : ", exec_time)
+    cv2.imshow("gray_blurred", gray_blurred)
 
     cv2.imshow("Detected Circle", first_frame)
     cv2.waitKey(0)

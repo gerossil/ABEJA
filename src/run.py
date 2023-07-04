@@ -9,19 +9,6 @@ class Circle:
         self.y = y
         self.radius = radius
 
-    def isPointInside(self, point_x, point_y):
-        print("le cercle x : " + str(point_x) + ", y : " + str(point_y) + " est il dans self x : " + str(self.x) + ", self y : " + str(self.y) + ", self r : " + str(self.radius))
-
-        dist_x = point_x - self.x if point_x > self.x else self.x - point_x
-        dist_y = point_y - self.y if point_y > self.y else self.y - point_y
-        print("dist_x : " + str(dist_x) + " dist_y : " + str(dist_y))
-
-        distance = dist_x**2 + dist_y**2
-        #distance = ((point_x - self.x)^2) + ((point_y - self.y)^2)
-        print("distance : " + str(distance) + " radius : " + str(self.radius))
-        print(str(distance <= self.radius**2))
-        return distance <= self.radius**2
-    
     
     def areCirclesSuperimposed(self, point_x, point_y, radius):
         dist_x = point_x - self.x if point_x > self.x else self.x - point_x

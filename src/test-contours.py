@@ -1,5 +1,5 @@
 import cv2
-chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\Bees-Cajica-1.MOV"
+chemin_video = "C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\videos\\CuartaToma.mp4"
 
 # Ouvrir la vidéo
 capture = cv2.VideoCapture(chemin_video)
@@ -16,7 +16,8 @@ if ret:
     cv2.imshow('Bilateral', bilateral_filtered_image)
     cv2.waitKey(0)
 
-    edge_detected_image = cv2.Canny(bilateral_filtered_image, 75, 200)
+    gray_blurred = cv2.blur(bilateral_filtered_image, (5, 5))
+    edge_detected_image = cv2.Canny(gray_blurred, 75, 200)
     cv2.imshow('Edge', edge_detected_image)
     cv2.waitKey(0)
 
