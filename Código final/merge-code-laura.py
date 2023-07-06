@@ -13,8 +13,7 @@ def main():
     # Ouvrir la vidéo
     capture = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\nido.mp4')
 
-    # Lire la première frame
-    
+
     ret, first_frame = capture.read()
     cv2.imshow("Detected Circle", first_frame)
 
@@ -23,7 +22,6 @@ def main():
     for i in range(1):
         ret, frame = capture.read()
 
-        # Vérifier si la lecture de la frame a réussi
         if ret:
             holes_count = 0
             # Convert to grayscale.
@@ -48,7 +46,7 @@ def main():
                     #print("trying to add circles at a : " + str(a) + " b : " + str(b) + " r : " + str(r))
 
                     if len(circles_tab) == 0:
-                        circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r))
+                        circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+10))#Radius + 10 to have a little bit larger area
                         holes_count += 1
                         #print("added first")
                         # Draw the circumference of the circle.
@@ -60,12 +58,12 @@ def main():
                     else:
                         inside = False
                         for circle in circles_tab:
-                            if circle.areCirclesSuperimposed(a,b,r):
+                            if circle.areCirclesSuperimposed(a,b,r+10):
                                 inside = True
                                 break
                         
                         if inside == False:
-                            circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r))
+                            circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+10))
                             holes_count += 1   
                             # Draw the circumference of the circle.
                             cv2.circle(first_frame, (a, b), r, (0, 255, 0), 2)

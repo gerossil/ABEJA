@@ -4,6 +4,7 @@ class Hole:
         self.x = x
         self.y = y
         self.radius = radius
+        self.bee_inside = False
 
     def isPointInside(self, point_x, point_y):
             dist_x = point_x - self.x if point_x > self.x else self.x - point_x
