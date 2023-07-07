@@ -12,7 +12,6 @@ kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
 
 def procesarVideo(holes: List[Hole]):
     global cap, fgbg, kernel
-    current_hole = None
     with open(f'abejas-prueba-{str(datetime.datetime.now()).replace(" ","").replace(":","-").replace(".","-")}.csv', mode='w') as file:
         employee_writer = csv.writer(file, delimiter=',')
 
@@ -50,20 +49,17 @@ def procesarVideo(holes: List[Hole]):
             # en su area poder determinar si existe movimiento
 
             cnts = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
-            #result = not any(map(lambda x: x >= 100, cnts))
 
             #Check if the bee is getting out
             if len (cnts) <=0:
                 for h in holes:
                     if h.bee_inside:
                         h.bee_inside = False
-                        exit_time = datetime.datetime.now() 
-                        current_hole = None
+                        exit_time = datetime.datetime.now()
                         duration = (exit_time - entry_time).total_seconds() / 60
                         employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
-
                         print("sortie")
-                        break
+                        break 
 
             for cnt in cnts:
                 if cv2.contourArea(cnt) > 100:
@@ -86,7 +82,6 @@ def procesarVideo(holes: List[Hole]):
                                 print("entree")
                                 entry_time = datetime.datetime.now()
                             
-                            current_hole = h
                             hole_name = holes[i].name
                             break
 
