@@ -50,6 +50,21 @@ def procesarVideo(holes: List[Hole]):
             # en su area poder determinar si existe movimiento
 
             cnts = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
+            #result = not any(map(lambda x: x >= 100, cnts))
+
+            #Check if the bee is getting out
+            if len (cnts) <=0:
+                for h in holes:
+                    if h.bee_inside:
+                        h.bee_inside = False
+                        exit_time = datetime.datetime.now() 
+                        current_hole = None
+                        duration = (exit_time - entry_time).total_seconds() / 60
+                        employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
+
+                        print("sortie")
+                        break
+
             for cnt in cnts:
                 if cv2.contourArea(cnt) > 100:
                     x, y, w, h = cv2.boundingRect(cnt)
@@ -61,28 +76,19 @@ def procesarVideo(holes: List[Hole]):
                     middle_point_x = x+w/2
                     middle_point_y = y+h/2
 
-                    if current_hole is not None:
-                        if not current_hole.isPointInside(middle_point_x, middle_point_y):
-                            print("plus dedans")
-                            if current_hole.bee_inside:
-                                print("sortie")
-                                exit_time = datetime.datetime.now() 
-                                current_hole = None
-                                employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration:.2f} min', f'Hoyo: {hole_name}'])
-
-                    else:
-                        # Verificar en qué hoyo se encuentra el punto medio
-                        for i, h in enumerate(holes):
-                            if h.isPointInside(middle_point_x, middle_point_y):
-                                print("dedans")
-                                if h.bee_inside == False:
-                                    h.bee_inside = True
-                                    print("entree")
-                                    entry_time = datetime.datetime.now()
-                                
-                                current_hole = h
-                                hole_name = holes[i].name
-                                break
+                    
+                    # Verificar en qué hoyo se encuentra el punto medio
+                    for i, h in enumerate(holes):
+                        if h.isPointInside(middle_point_x, middle_point_y):
+                            print("dedans")
+                            if h.bee_inside == False:
+                                h.bee_inside = True
+                                print("entree")
+                                entry_time = datetime.datetime.now()
+                            
+                            current_hole = h
+                            hole_name = holes[i].name
+                            break
 
                     # Mantener un registro del tiempo de entrada y salida de cada hoyo
                     if not hasattr(cv2, 'current_hole'):
@@ -96,16 +102,7 @@ def procesarVideo(holes: List[Hole]):
                         cv2.current_hole = hole_name
                         cv2.start_time = datetime.datetime.now()
 
-                else:       
-                    if current_hole is not None:
-                            if not current_hole.isPointInside(middle_point_x, middle_point_y):
-                                print("plus dedans")
-                                if current_hole.bee_inside:
-                                    print("sortie")
-                                    exit_time = datetime.datetime.now() 
-                                    current_hole = None
-                                    employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration:.2f} min', f'Hoyo: {hole_name}'])
-
+               
             #Visualizamos el alrededor del área que vamos a análizar
             #Visualizamos el estado de la detección en movimiento
             for hole in holes:
