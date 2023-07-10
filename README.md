@@ -20,6 +20,9 @@
 
 
 
-    labelIMG
+    labelIMG "C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\train\images" "C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\train\labels\classes.txt"
 
-    yolo task=detect mode=train epochs=100 data=data_custom.yaml model="C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\runs\detect\train9\weights\best.pt" imgsz=640   
+    Premier Argument : Chemin vers les images d'entrainement 
+    Deuxieme Arguement : Chemin vers les classes à charger pour une cohérences des données sinon les labels ont des risques de dériver.
+
+    yolo task=detect mode=train epochs=20 data=data_custom.yaml model="C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\runs\detect\train2\weights\best.pt" imgsz=640   

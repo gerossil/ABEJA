@@ -5,11 +5,11 @@ import cv2
 import numpy as np
 
 # Load the model
-model = YOLO('C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection - copia\\runs\\detect\\train9\\weights\\best.pt')  # load a pretrained model
+model = YOLO('C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection - copia\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
 
 # Perform inference
 
-image_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection - copia\\train\\images\\Hole_31.jpg'
+image_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection - copia\\train\\images\\Hole_19.png'
 
 
 results = model(image_path)
