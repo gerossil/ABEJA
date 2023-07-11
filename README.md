@@ -1,6 +1,6 @@
 # ABEJA
 
-
+    pip install simple_image_download==0.4   
 
 ## CONDA 
 
@@ -16,7 +16,7 @@
 
 
 
-## TRAINING YOLO 
+### TRAINING YOLO 
 
 
 
@@ -25,4 +25,4 @@
     Premier Argument : Chemin vers les images d'entrainement 
     Deuxieme Arguement : Chemin vers les classes à charger pour une cohérences des données sinon les labels ont des risques de dériver.
 
-    yolo task=detect mode=train epochs=20 data=data_custom.yaml model="C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\runs\detect\train2\weights\best.pt" imgsz=640   
+    yolo task=detect mode=train epochs=20 data=data_custom.yaml model="C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\runs\detect\train5\weights\best.pt" imgsz=640   
