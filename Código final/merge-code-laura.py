@@ -18,6 +18,7 @@ def main():
     cv2.imshow("Detected Circle", first_frame)
 
     circles_tab = []
+    peripherical_circles_tab = [] #to assume bees are getting out, we'll need to check the periphery of the hole
     
     for i in range(1):
         ret, frame = capture.read()
@@ -46,7 +47,8 @@ def main():
                     #print("trying to add circles at a : " + str(a) + " b : " + str(b) + " r : " + str(r))
 
                     if len(circles_tab) == 0:
-                        circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+10))#Radius + 10 to have a little bit larger area
+                        circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+5))#Radius + 5 to have a little bit larger area
+                        peripherical_circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+15))
                         holes_count += 1
                         #print("added first")
                         # Draw the circumference of the circle.
@@ -58,12 +60,13 @@ def main():
                     else:
                         inside = False
                         for circle in circles_tab:
-                            if circle.areCirclesSuperimposed(a,b,r+10):
+                            if circle.areCirclesSuperimposed(a,b,r+5):
                                 inside = True
                                 break
                         
                         if inside == False:
-                            circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+10))
+                            circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+5))
+                            peripherical_circles_tab.append(Hole("Hoyo"+str(holes_count),a,b,r+15))
                             holes_count += 1   
                             # Draw the circumference of the circle.
                             cv2.circle(first_frame, (a, b), r, (0, 255, 0), 2)
@@ -79,7 +82,7 @@ def main():
     cv2.imshow("Detected Circle", first_frame)
     cv2.waitKey(0)
 
-    procesarVideo(circles_tab)
+    procesarVideo(circles_tab, peripherical_circles_tab)
 
 
       

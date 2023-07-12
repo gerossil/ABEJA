@@ -10,7 +10,7 @@ cap = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código fin
 fgbg = cv2.createBackgroundSubtractorMOG2()
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
 
-def procesarVideo(holes: List[Hole]):
+def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
     global cap, fgbg, kernel
     with open(f'abejas-prueba-{str(datetime.datetime.now()).replace(" ","").replace(":","-").replace(".","-")}.csv', mode='w') as file:
         employee_writer = csv.writer(file, delimiter=',')
@@ -33,8 +33,7 @@ def procesarVideo(holes: List[Hole]):
 
 
             imAux = np.zeros(shape=(frame.shape[:2]), dtype=np.uint8)
-            for hole in holes:
-                # Draw the circumference of the circle.
+            for hole in peripherical_holes: #Draw the the peripherical area of the hole
                 imAux = cv2.circle(imAux, (hole.x, hole.y), hole.radius, (255), -1)
             
           
@@ -51,18 +50,19 @@ def procesarVideo(holes: List[Hole]):
             cnts = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
 
             #Check if the bee is getting out
-            if len (cnts) <=0:
-                for h in holes:
-                    if h.bee_inside:
-                        h.bee_inside = False
-                        exit_time = datetime.datetime.now()
-                        duration = (exit_time - entry_time).total_seconds() / 60
-                        employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
-                        print("sortie")
-                        break 
+            # if len (cnts) <=0:
+            #     for h in holes:
+            #         if h.bee_inside:
+            #             h.bee_inside = False
+            #             exit_time = datetime.datetime.now()
+            #             duration = (exit_time - entry_time).total_seconds() / 60
+            #             employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
+            #             print("sortie")
+            #             break
+            
 
             for cnt in cnts:
-                if cv2.contourArea(cnt) > 100:
+                if cv2.contourArea(cnt) > 100: #if something is detected in the area
                     x, y, w, h = cv2.boundingRect(cnt)
                     cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 2)
                     texto_estado = "Estado: Alerta Abeja detectada!!"
@@ -84,6 +84,16 @@ def procesarVideo(holes: List[Hole]):
                             
                             hole_name = holes[i].name
                             break
+                        elif h.bee_inside:
+                            periphery_hole = Hole("Hoyo Periphery",h.x, h.y, h.radius+15)
+                            if periphery_hole.isPointInside(middle_point_x, middle_point_y):
+                                print("sortie") 
+                                h.bee_inside = False
+                                exit_time = datetime.datetime.now()
+                                duration = (exit_time - entry_time).total_seconds() / 60
+                                employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
+                                break
+                        
 
                     # Mantener un registro del tiempo de entrada y salida de cada hoyo
                     if not hasattr(cv2, 'current_hole'):
