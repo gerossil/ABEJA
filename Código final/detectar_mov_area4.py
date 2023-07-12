@@ -5,7 +5,7 @@ import datetime
 from typing import List
 from Hole import Hole
 
-cap = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\nido.mp4')
+cap = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4')
 
 fgbg = cv2.createBackgroundSubtractorMOG2()
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
@@ -16,7 +16,6 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
         employee_writer = csv.writer(file, delimiter=',')
 
         while True:
-            hole_name = 'None'
             ret, frame = cap.read()
             if ret == False: break
 
@@ -76,37 +75,38 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                     # Verificar en qué hoyo se encuentra el punto medio
                     for i, h in enumerate(holes):
                         if h.isPointInside(middle_point_x, middle_point_y):#if bee is inside one of the hole
-                            print("inside")
+                            #print("inside")
                             if h.bee_inside == False: #if the hole didn't have a bee yet
                                 h.bee_inside = True #bee inside true
-                                print("entry")
+                                #print("entry")
                                 h.entry_time = datetime.datetime.now()
-                            
-                            hole_name = holes[i].name
                             break
+
                         elif h.bee_inside: #if bee isn't currently in one of the hole but was, we check in the periphery of the hole
                             periphery_hole = Hole("Hoyo Periphery",h.x, h.y, h.radius+15)
                             if periphery_hole.isPointInside(middle_point_x, middle_point_y): #if bee was in a hole and is in periphery, we assume it is getting out
-                                print("exit") 
+                                #print("exit") 
                                 h.bee_inside = False
-                                h.entry_time = None
                                 exit_time = datetime.datetime.now()
                                 duration = (exit_time - h.entry_time).total_seconds() / 60
-                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
+                                delta = datetime.timedelta(minutes=duration)
+
+                                hours = delta.seconds // 3600
+                                minutes = (delta.seconds % 3600) // 60
+                                seconds = delta.seconds % 60
+
+                                # Formater la durée en HH:mm:ss
+                                duration_formatted = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+                                print([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted} min', f'Hoyo: {h.name}'])
+                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted} min', f'Hoyo: {h.name}'])
+                                h.entry_time = None
                                 break
-                        
 
-                    # Mantener un registro del current hole
-                    if not hasattr(cv2, 'current_hole'):
-                        cv2.current_hole = hole_name
-                    elif cv2.current_hole != hole_name:
-                        cv2.current_hole = hole_name
-
-               
             #Visualizamos el alrededor del área que vamos a análizar
             #Visualizamos el estado de la detección en movimiento
             for hole in holes:
-                if hole.name == cv2.current_hole:
+                if hole.bee_inside:
                     cv2.circle(frame, (hole.x, hole.y), hole.radius, (0,0,255), 2)
                 else:
                     cv2.circle(frame, (hole.x, hole.y), hole.radius, (0,255,0), 2)
