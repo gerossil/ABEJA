@@ -75,37 +75,32 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                     
                     # Verificar en qué hoyo se encuentra el punto medio
                     for i, h in enumerate(holes):
-                        if h.isPointInside(middle_point_x, middle_point_y):
-                            print("dedans")
-                            if h.bee_inside == False:
-                                h.bee_inside = True
-                                print("entree")
-                                entry_time = datetime.datetime.now()
+                        if h.isPointInside(middle_point_x, middle_point_y):#if bee is inside one of the hole
+                            print("inside")
+                            if h.bee_inside == False: #if the hole didn't have a bee yet
+                                h.bee_inside = True #bee inside true
+                                print("entry")
+                                h.entry_time = datetime.datetime.now()
                             
                             hole_name = holes[i].name
                             break
-                        elif h.bee_inside:
+                        elif h.bee_inside: #if bee isn't currently in one of the hole but was, we check in the periphery of the hole
                             periphery_hole = Hole("Hoyo Periphery",h.x, h.y, h.radius+15)
-                            if periphery_hole.isPointInside(middle_point_x, middle_point_y):
-                                print("sortie") 
+                            if periphery_hole.isPointInside(middle_point_x, middle_point_y): #if bee was in a hole and is in periphery, we assume it is getting out
+                                print("exit") 
                                 h.bee_inside = False
+                                h.entry_time = None
                                 exit_time = datetime.datetime.now()
-                                duration = (exit_time - entry_time).total_seconds() / 60
-                                employee_writer.writerow([f'Entry : {entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
+                                duration = (exit_time - h.entry_time).total_seconds() / 60
+                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration} min', f'Hoyo: {h.name}'])
                                 break
                         
 
-                    # Mantener un registro del tiempo de entrada y salida de cada hoyo
+                    # Mantener un registro del current hole
                     if not hasattr(cv2, 'current_hole'):
                         cv2.current_hole = hole_name
-                        cv2.start_time = datetime.datetime.now()
                     elif cv2.current_hole != hole_name:
-                        cv2.end_time = datetime.datetime.now()
-                        duration = (cv2.end_time - cv2.start_time).total_seconds() / 60
-                        #employee_writer = csv.writer(file, delimiter=',')
-                        #employee_writer.writerow([f'duration: {duration:.2f} min', f'Hoyo: {hole_name}'])
                         cv2.current_hole = hole_name
-                        cv2.start_time = datetime.datetime.now()
 
                
             #Visualizamos el alrededor del área que vamos a análizar
