@@ -1,6 +1,0 @@
-train: C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\train
-val: C:\Users\LABSIS\Documents\ABEJA\photo_detection - copia\val
-
-nc: 3
-
-names: ["Hole", "Hotel", "HoleDone"]
