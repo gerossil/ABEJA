@@ -26,18 +26,18 @@ def main():
 
     for box in boxes: 
         x_min, y_min, x_max, y_max = box
-        class_id = results[0].names[results[0].boxes[holes_count].cls[0].item()] #get type objects in image (hole, holeDone, hotel)
+        class_id = results[0].names[results[0].boxes[holes_count].cls[0].item()] #get type of objects in image (hole, holeDone, hotel)
         if class_id == "Hole":
-            centre_x =  np.uint16(np.around((x_min + x_max) / 2))
-            centre_y = np.uint16(np.around((y_min + y_max) / 2))
-            rayon = np.uint16(np.around((x_max - x_min) / 2))
-            circles_tab.append(Hole("Hoyo" + str(holes_count), centre_x, centre_y, rayon + 5))#Radius + 5 to have a little bit larger area
-            peripherical_circles_tab.append(Hole("Hoyo" + str(holes_count), centre_x, centre_y, rayon + 15))
+            center_x =  np.uint16(np.around((x_min + x_max) / 2))
+            center_y = np.uint16(np.around((y_min + y_max) / 2))
+            radius = np.uint16(np.around((x_max - x_min) / 2))
+            circles_tab.append(Hole("Hoyo" + str(holes_count), center_x, center_y, radius + 5))#Radius + 5 to have a little bit larger area
+            peripherical_circles_tab.append(Hole("Hoyo" + str(holes_count), center_x, center_y, radius + 15))
             #Draw circles with point at the center
-            cv2.circle(first_frame, (centre_x, centre_y), rayon, (0, 255, 0), 2)
-            cv2.circle(first_frame, (centre_x, centre_y), 1, (0, 0, 255), 3)
+            cv2.circle(first_frame, (center_x, center_y), radius, (0, 255, 0), 2)
+            cv2.circle(first_frame, (center_x, center_y), 1, (0, 0, 255), 3)
         holes_count += 1
-      
+
     end_time = time.time()
     exec_time = end_time - start_time
 
