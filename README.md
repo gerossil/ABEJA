@@ -31,3 +31,6 @@
 
     yolo task=detect mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection\runs\detect\train8\weights\best.pt" imgsz=640   
 
+
+
+     yolo task=detect mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml"  imgsz=640   
