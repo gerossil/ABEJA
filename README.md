@@ -1,4 +1,19 @@
+
+
+
 # ABEJA
+
+## REQUIREMENT 
+
+    Application : GIT, Python, Anaconda
+
+### CONFIGURATION 
+
+#### GIT 
+
+    git config --global user.email "leo.gerossier38@gmail.com"
+    git config --global user.name "Leo Gerossier"
+
 
     pip install simple_image_download==0.4   
 
