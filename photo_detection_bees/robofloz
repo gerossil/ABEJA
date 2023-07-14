@@ -1,0 +1,13 @@
+from roboflow import Roboflow
+rf = Roboflow(api_key="4n3KsZRxAwwoXO3myyMK")
+project = rf.workspace().project("bees-nc14v")
+model = project.version(4).model
+
+# infer on a local image
+#print(model.predict("C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees\\bees_v2\\frame_17.jpg", confidence=40, overlap=30).json())
+
+# visualize your prediction
+model.predict("C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees\\bees_v2\\frame_30.jpg", confidence=0, overlap=0).save("prediction.jpg")
+
+# infer on an image hosted elsewhere
+# print(model.predict("URL_OF_YOUR_IMAGE", hosted=True, confidence=40, overlap=30).json())

@@ -6,6 +6,7 @@ import numpy as np
 import os
 
 # Load the model
+
 model = YOLO('C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
 
 # Perform inference
