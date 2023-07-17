@@ -76,7 +76,8 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                                 duration_formatted = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
                                 print([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
-                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
+                                if seconds > 1:
+                                    employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
                                 h.entry_time = None
                                 break
 
