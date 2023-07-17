@@ -6,18 +6,23 @@ from typing import List
 from Hole import Hole
 from ultralytics import YOLO
 
-cap = cv2.VideoCapture('C:\\Users\\LABSIS\\Documents\\abeja\\ABEJA\\Código final\\video-zoomed.mp4')
-model = YOLO('C:\\Users\\LABSIS\\Documents\\abeja\\ABEJA\\photo_detection_bees\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
-
-fgbg = cv2.createBackgroundSubtractorMOG2()
-kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
-
 def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
     global cap, fgbg, kernel
-    with open(f'abejas-prueba-{str(datetime.datetime.now()).replace(" ","").replace(":","-").replace(".","-")}.csv', mode='w') as file:
+    
+    cap = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4')
+    model = YOLO('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\photo_detection_bees\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
+
+    fgbg = cv2.createBackgroundSubtractorMOG2()
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_count = 0 #we need to count every frame to get the real time of entries and exits
+    start_time = datetime.datetime.now()
+
+    with open(f'abejas-prueba-{str(start_time).replace(" ","").replace(":","-").replace(".","-")}.csv', mode='w') as file:
         employee_writer = csv.writer(file, delimiter=',')
 
         while True:
+            frame_count += 1
             ret, frame = cap.read()
             if ret == False: break
             results = model(frame)
@@ -44,7 +49,11 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                             if h.bee_inside == False: #if the hole didn't have a bee yet
                                 h.bee_inside = True #bee inside true
                                 #print("entry")
-                                h.entry_time = datetime.datetime.now()
+                                elapsed_time = frame_count / fps #to get the seconds elapsed since beginning                            
+                                delta = datetime.timedelta(seconds=elapsed_time)
+                                entry_time = start_time + delta
+                                print("entry : " + entry_time.strftime("%H:%M:%S"))
+                                h.entry_time = entry_time
                             break
 
                         elif h.bee_inside: #if bee isn't currently in one of the hole but was, we check in the periphery of the hole
@@ -52,7 +61,10 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                             if periphery_hole.isPointInside(center_x, center_y): #if bee was in a hole and is in periphery, we assume it is getting out
                                 #print("exit") 
                                 h.bee_inside = False
-                                exit_time = datetime.datetime.now()
+                                elapsed_time = frame_count / fps #to get the seconds elapsed since beginning                            
+                                delta = datetime.timedelta(seconds=elapsed_time)
+                                exit_time = start_time + delta
+
                                 duration = (exit_time - h.entry_time).total_seconds() / 60
                                 delta = datetime.timedelta(minutes=duration)
 
@@ -63,8 +75,8 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
                                 # Formater la durée en HH:mm:ss
                                 duration_formatted = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
-                                print([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted} min', f'Hoyo: {h.name}'])
-                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted} min', f'Hoyo: {h.name}'])
+                                print([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
+                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
                                 h.entry_time = None
                                 break
 
