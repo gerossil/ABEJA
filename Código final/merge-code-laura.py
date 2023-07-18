@@ -11,7 +11,10 @@ def main():
     start_time = time.time()
 
     # Ouvrir la vidéo
-    capture = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abeja\\ABEJA\\Código final\\nido.mp4')
+    video = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_tracking\\video-zoomed.mp4'
+
+
+    capture = cv2.VideoCapture(video)
 
 
     ret, first_frame = capture.read()
@@ -82,7 +85,7 @@ def main():
     cv2.imshow("Detected Circle", first_frame)
     cv2.waitKey(0)
 
-    procesarVideo(circles_tab, peripherical_circles_tab)
+    procesarVideo(circles_tab, peripherical_circles_tab, video)
 
 
       

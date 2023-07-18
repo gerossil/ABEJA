@@ -6,10 +6,10 @@ from typing import List
 from Hole import Hole
 from ultralytics import YOLO
 
-def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole]):
+def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole], video):
     global cap, fgbg, kernel
     
-    cap = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4')
+    cap = cv2.VideoCapture(video)
     model = YOLO('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\photo_detection_bees\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
 
     fgbg = cv2.createBackgroundSubtractorMOG2()

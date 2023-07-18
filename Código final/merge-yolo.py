@@ -12,7 +12,15 @@ def main():
     
     start_time = time.time()
     # Ouvrir la vidéo
-    capture = cv2.VideoCapture('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4')
+
+    video = 'C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4'
+
+    
+
+    capture = cv2.VideoCapture(video)
+
+    
+
     ret, first_frame = capture.read()
 
     # Load the model
@@ -46,7 +54,7 @@ def main():
     cv2.imshow("Detected Circle", first_frame)
     cv2.waitKey(0)
 
-    procesarVideo(circles_tab, peripherical_circles_tab)
+    procesarVideo(circles_tab, peripherical_circles_tab, video)
   
 
 if __name__ == "__main__":
