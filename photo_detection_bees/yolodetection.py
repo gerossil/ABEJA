@@ -7,11 +7,11 @@ import os
 
 # Load the model
 
-model = YOLO('C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\runs\\detect\\train5\\weights\\best.pt')  # load a pretrained model
+model = YOLO('C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\runs\\detect\\train6\\weights\\best.pt')  # load a pretrained model
 
 # Perform inference
 
-path_dossier = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees\\bees_v3'
+path_dossier = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees\\path_to_output_directory\\'
 
 for nom_fichier in os.listdir(path_dossier):
     if nom_fichier.endswith(".jpg") or nom_fichier.endswith(".png") or nom_fichier.endswith(".jpeg"):

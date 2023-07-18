@@ -1,6 +1,6 @@
 task: detect
 mode: train
-model: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train5\weights\best.pt
+model: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train6\weights\last.pt
 data: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml
 epochs: 200
 patience: 50
@@ -10,7 +10,7 @@ save: true
 save_period: -1
 cache: false
 device: null
-workers: 8
+workers: 0
 project: null
 name: null
 exist_ok: false
@@ -70,7 +70,7 @@ momentum: 0.937
 weight_decay: 0.0005
 warmup_epochs: 3.0
 warmup_momentum: 0.8
-warmup_bias_lr: 0.1
+warmup_bias_lr: 0.0
 box: 7.5
 cls: 0.5
 dfl: 1.5

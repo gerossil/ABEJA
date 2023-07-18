@@ -62,4 +62,8 @@
 
     !Yolo training pour les abeilles 
     cd C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees
-    yolo task=detect mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train2\weights\best.pt"  imgsz=640   
+    yolo task=detect  mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train2\weights\best.pt"  imgsz=640   
+
+
+    !Yolo resume a training of bees
+    yolo task=detect mode=train resume data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train6\weights\last.pt"  imgsz=640 
