@@ -2,13 +2,13 @@ import cv2
 import os
 
 # Path to the video file
-video_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\video-zoomed_10s.mp4'
+video_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v3.mp4'
 
 # Open the video file
 video = cv2.VideoCapture(video_path)
 
 # Create a directory to store the frames
-output_dir = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\path_to_output_directory'
+output_dir = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v3'
 os.makedirs(output_dir, exist_ok=True)
 
 # Read and save frames until the video ends
