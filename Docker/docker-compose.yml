@@ -5,14 +5,14 @@ networks:
 
 services:
   influxdb:
-    image: influxdb:2.3.0
+    image: influxdb
     ports:
       - 8086:8086
     networks:
       - monitoring
 
   grafana:
-    image: grafana/grafana:9.0.4
+    image: grafana/grafana
     ports:
       - 3000:3000
     networks:

@@ -13,9 +13,8 @@ def main():
     start_time = time.time()
     # Ouvrir la vidéo
 
-    video = 'C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\Código final\\video-zoomed.mp4'
+    video ='/Users/malcolmneerman/dev/Abeja/ABEJA/Código final/bees_v3.mp4'
 
-    
 
     capture = cv2.VideoCapture(video)
 
@@ -24,7 +23,7 @@ def main():
     ret, first_frame = capture.read()
 
     # Load the model
-    model = YOLO('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\photo_detection\\runs\\detect\\train9\\weights\\best.pt')  # load a pretrained model
+    model = YOLO('/Users/malcolmneerman/dev/Abeja/ABEJA/photo_detection/runs/detect/train9/weights/best.pt')  # load a pretrained model
     results = model(first_frame) #parse the image to get the holes
 
     boxes = results[0].boxes.xyxy.tolist()
