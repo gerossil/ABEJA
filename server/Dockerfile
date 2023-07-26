@@ -7,11 +7,11 @@ COPY . /app
 # Définissez le répertoire de travail
 WORKDIR /app
 
-RUN if [ -f "requirements.txt" ] && ! cmp -s "requirements.txt" "/usr/src/app/requirements.txt"; then \
-        pip install --no-cache-dir -r requirements.txt; \
-    fi
+ADD ./requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+
 # Installez les dépendances de votre application
-RUN pip install -r python-dependencies.txt
+#RUN pip install -r python-dependencies.txt
 
 # Définissez les variables d'environnement Flask
 ENV FLASK_APP=app.py

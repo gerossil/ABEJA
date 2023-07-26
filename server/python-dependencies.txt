@@ -1,7 +1,0 @@
-opencv-python
-numpy
-influxdb_client
-yolov5
-Pillow
-matplotlib
-Flask

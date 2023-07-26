@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import services.detect_holes
 
 app = Flask(__name__)
 
@@ -16,8 +17,8 @@ def upload():
     if video_file.filename == '':
         return 'No selected video', 400
     
-    # Code pour enregistrer ou traiter la vidéo
-    # Vous pouvez enregistrer la vidéo sur le disque ou effectuer des opérations de traitement ici
+
+    services.detect_holes.detectHoles(video_file)
 
     return 'Video uploaded successfully'
     return render_template('index.html')
