@@ -95,6 +95,7 @@ def procesarVideo(holes: List[Hole], video):
                                         Point("bees-actions")
                                         .field("entryTime", h.entry_time.strftime("%m/%d/%Y, %H:%M:%S:%f"))
                                         .field("exitTime", exit_time.strftime("%m/%d/%Y, %H:%M:%S:%f"))
+                                        .field("exitTime", duration_formatted.strftime("%m/%d/%Y, %H:%M:%S:%f"))
                                         .field("holeId", h.name)
                                     )
                                 write_api.write(bucket=bucket, org="my-org", record=point)
