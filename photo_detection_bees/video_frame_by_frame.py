@@ -2,7 +2,7 @@ import cv2
 import os
 
 # Path to the video file
-video_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v3.mp4'
+video_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v2.mp4'
 
 # Open the video file
 video = cv2.VideoCapture(video_path)
