@@ -1,0 +1,13 @@
+train: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\train\images
+val: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\val\images
+test: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\test\images
+
+nc: 1
+names: ['Bees']
+
+roboflow:
+  workspace: umng
+  project: bees-nc14v
+  version: 1
+  license: Public Domain
+  url: https://universe.roboflow.com/umng/bees-nc14v/dataset/1
