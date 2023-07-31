@@ -68,3 +68,5 @@
     !Yolo resume a training of bees
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
     yolo task=detect mode=train resume data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train9\weights\last.pt"  imgsz=640 
+
+    yolo task=detect mode=train resume data="/root/ABEJA/photo_detection_bees/data_custom_linux.yaml" model="/root/ABEJA/photo_detection_bees/runs/detect/train9/weights/last.pt"  imgsz=640 
