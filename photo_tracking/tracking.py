@@ -5,4 +5,4 @@ model = YOLO('C:\\Users\\UMFRAB\\Documents\\ABEJA\\photo_detection_bees\\runs\\d
 
 
 # Track with the model
-results = model.track(source="C:\\Users\\UMFRAB\\Documents\\ABEJA\\photo_tracking\\bees_v4_inside.mp4", conf=0.5, show=True, persist=True) 
+results = model.track(source="C:\\Users\\UMFRAB\\Documents\\ABEJA\\photo_tracking\\bees_v7.mp4", conf=0.5, show=True, persist=True) 
