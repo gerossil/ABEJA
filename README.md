@@ -53,17 +53,13 @@
     !Label d'image pour les abeilles 
     labelIMG "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\images" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\labels\classes.txt" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\labels"
     
-    
-
     !Yolo training pour les trous vides/finis et les hotels
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection
     yolo task=detect mode=train epochs=20 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection\runs\detect\train8\weights\best.pt" imgsz=640   
 
-
     !Yolo training pour les abeilles 
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect  mode=train epochs=100 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train8\weights\best.pt"  imgsz=640   
-
+    yolo task=detect  mode=train epochs=10 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train8\weights\best.pt"  imgsz=640   
 
     !Yolo resume a training of bees
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
