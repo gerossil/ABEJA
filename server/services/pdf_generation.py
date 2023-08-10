@@ -1,7 +1,8 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import matplotlib
 import matplotlib.pyplot as plt
-from io import BytesIO
+import io
 import datetime
 from PIL import Image
 import cv2
@@ -15,6 +16,7 @@ photo_path = "/Users/malcolmneerman/dev/Abeja/ABEJA/server/services/IMG_2238.jpe
 # Exemple de données pour le graphe (vous pouvez remplacer ces valeurs par les données de votre base de données)
 x_values = [1, 2, 3, 4, 5]
 y_values = [10, 20, 15, 30, 25]
+matplotlib.use('agg')
 
 # Créer le graphe avec Matplotlib
 def create_graph():
@@ -36,17 +38,19 @@ def create_pdf(video_name, fps, date_range, photo):
     c.drawString(100, 730, "Frame Per Second: " + str(fps))
     c.drawString(100, 710, "Date: " + date_range)
 
+    filename = 'temp_photo.jpg'
+    cv2.imwrite(filename, photo)
      # Charger l'image avec PIL
-    img = Image.fromarray(cv2.cvtColor(photo, cv2.COLOR_BGR2RGB))
+    image = Image.fromarray(cv2.cvtColor(photo, cv2.COLOR_BGR2RGB))  
+    img_width, img_height = image.size
 
-    img_width, img_height = img.size
   # Calculer la hauteur proportionnelle à la largeur pour occuper toute la largeur du PDF
     target_width = letter[0] - 200
     target_height = (target_width * img_height) // img_width
 
     # Dessiner l'image avec la taille calculée
     c.drawString(100, 680, "Nest and holes:")
-    c.drawImage(photo, 100, 710 - target_height - 50, width=target_width, height=target_height)
+    c.drawImage(filename, 100, 710 - target_height - 50, width=target_width, height=target_height)
 
     # Générer le graphe
     create_graph()

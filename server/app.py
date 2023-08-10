@@ -22,9 +22,10 @@ def upload():
 
     circles_tab, temp_file_path, first_frame = services.detect_holes.detectHoles(video_file)
 
+    services.pdf_generation.create_pdf(video_file.filename, 30, "", first_frame)
+
     fps = detect_bees.procesarVideo(circles_tab, temp_file_path)
 
-    services.pdf_generation.create_pdf(video_file.filename, fps, "", first_frame)
-    
+
     return 'Video uploaded successfully'
     return render_template('index.html')

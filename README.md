@@ -5,7 +5,7 @@
 
 ## REQUIREMENT 
 
-    Application : GIT, Python, Anaconda
+    Application : GIT, Python, Anaconda, Docker
 
 ### CONFIGURATION 
 
