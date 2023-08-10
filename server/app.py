@@ -26,9 +26,9 @@ def upload():
         return 'No selected video', 400
     
 
-    circles_tab, temp_file_path, first_frame = services.detect_holes.detectHoles(video_file)
+    circles_tab, circles_done_tab, temp_file_path, first_frame = services.detect_holes.detectHoles(video_file)
 
-    services.pdf_generation.create_pdf(video_file.filename, 30, "", first_frame)
+    services.pdf_generation.create_pdf(video_file.filename, 30, "", first_frame, len(circles_tab), len(circles_done_tab))
 
     fps = detect_bees.procesarVideo(circles_tab, temp_file_path)
 
