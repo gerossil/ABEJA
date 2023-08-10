@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Download PDF</title>
+    <title>Bees actions report download</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,7 +48,7 @@
         .back-link {
             margin-top: 20px;
             text-decoration: none;
-            color: #007bff;
+            color: #ffffff;
             display: inline-block;
             transition: color 0.3s ease-in-out;
         }
@@ -60,9 +60,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>Download PDF</h1>
+        <h1>Download last report</h1>
         <p>Click the button below to download the PDF:</p>
-        <a href="{{ url_for('download_pdf') }}" download="output.pdf">Download PDF</a>
+        <a href="{{ url_for('download_pdf') }}" download="output.pdf">Download</a>
         <a class="back-link" href="/">Return to upload page</a>
 
     </div>

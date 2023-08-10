@@ -12,15 +12,25 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import uuid
 
 def procesarVideo(holes: List[Hole], video):
-    global cap, fgbg, kernel
-    
+    global cap
+    video_name = 'analysis.mp4'
+
     cap = cv2.VideoCapture(video)
     model = YOLO('./yolo/best.pt')  # load a pretrained model
 
-    fgbg = cv2.createBackgroundSubtractorMOG2()
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+
     fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_count = 0 #we need to count every frame to get the real time of entries and exits
+
+    if os.path.exists(video_name):
+        os.remove(video_name)
+    # Créer le VideoWriter pour la vidéo de sortie
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Choisissez le codec approprié
+    video = cv2.VideoWriter(video_name, fourcc, fps, (frame_width, frame_height))
+
+
     start_time = datetime.datetime.now()
 
     analysis_id = uuid.uuid1()
@@ -55,11 +65,10 @@ def procesarVideo(holes: List[Hole], video):
                     center_y = np.uint16(np.around((y_min + y_max) / 2))
                     radius = np.uint16(np.around((x_max - x_min) / 2))
                     #Draw circles with point at the center
-                    cv2.circle(frame, (center_x, center_y), radius, (0, 100, 100), 2)
+                    cv2.circle(frame, (center_x, center_y), radius, (51, 255, 255), 2)
 
                     holes_count += 1
                     for i, h in enumerate(holes):
-                        #temp_hole = Hole("", h.y, h.y, h.radius/2) 
                         if h.isPointInside(center_x, center_y):#if bee is inside one of the hole
                             #print("inside")
                             if h.bee_inside == False: #if the hole didn't have a bee yet
@@ -108,11 +117,17 @@ def procesarVideo(holes: List[Hole], video):
                                     employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
                                 h.entry_time = None
                                 break
+
+            for hole in holes:
+                if hole.bee_inside:
+                    cv2.circle(frame, (hole.x, hole.y), np.uint16(np.around(hole.radius)), (0,0,255), 2)
+                else:
+                    cv2.circle(frame, (hole.x, hole.y), np.uint16(np.around(hole.radius)), (0,255,0), 2)
+            video.write(frame)
+
         #end of video
     #     create_pdf()
     cap.release()
-    return fps
+    video.release()
 
-            
-    cap.release()
-    cv2.destroyAllWindows()
+    return fps
