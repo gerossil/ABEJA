@@ -1,1 +1,5 @@
 0:47 bees_v4_trim_1 -> 2:05 bees_v4_trim_2 \ bees_v4
+
+3:52 bees_v7_entry -> 4:55 bees_v7_out
+
+6:51 -> 8:14 bees_v7

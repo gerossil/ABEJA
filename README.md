@@ -59,10 +59,10 @@
 
     !Yolo training pour les abeilles 
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect  mode=train epochs=10 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train8\weights\best.pt"  imgsz=640   
+    yolo task=detect  mode=train epochs=200 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train9\weights\best.pt"  imgsz=640   
 
     !Yolo resume a training of bees
     cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect mode=train resume data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train9\weights\last.pt"  imgsz=640 
+    yolo task=detect mode=train resume data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train10\weights\last.pt"  imgsz=640 
 
     yolo task=detect mode=train resume data="/root/ABEJA/photo_detection_bees/data_custom_linux.yaml" model="/root/ABEJA/photo_detection_bees/runs/detect/train9/weights/last.pt"  imgsz=640 
