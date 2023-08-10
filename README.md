@@ -50,13 +50,19 @@
 
      yolo task=detect mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml"  imgsz=640   
 
+### Requirement Flask 
 
+    pip install Flask influxdb influxdb_client reportlab
 
-### Run Solution
-flask --app app.py run
-docker compose up -d
-influx setup --name myinfluxdb2 --host http://localhost:8086 \
-  -u admin -p admin54321 -o my-org \
-  -b my-bucket -t my-token -r 0 -f
+### Run Solution Flask 
+    
+    flask --app app.py run
 
-Add grafana data source
+### Run Solution Docker
+
+    docker compose up -d
+    influx setup --name myinfluxdb2 --host http://localhost:8086 \
+    -u admin -p admin54321 -o my-org \
+    -b my-bucket -t my-token -r 0 -f
+
+    Add grafana data source
