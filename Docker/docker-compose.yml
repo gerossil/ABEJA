@@ -5,6 +5,8 @@ networks:
 
 services:
   influxdb:
+    build: 
+      context: ../influxdb
     image: influxdb
     ports:
       - 8086:8086
@@ -21,15 +23,15 @@ services:
       - grafana:/var/lib/grafana
     networks:
       - monitoring
-  flask:
-    build: 
-      context: ../server
-    ports:
-      - 5000:5000
-    volumes:
-      - flask:/var/lib/flask
-    networks:
-      - monitoring
+  # flask:
+  #   build: 
+  #     context: ../server
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - flask:/var/lib/flask
+  #   networks:
+  #     - monitoring
 volumes:
   influx:
   grafana:
