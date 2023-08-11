@@ -56,7 +56,7 @@
 
 ### Run Solution Flask 
     
-    flask --app app.py run
+    flask --app app.py run --reload
 
 ### Run Solution Docker
 
