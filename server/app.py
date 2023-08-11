@@ -14,6 +14,21 @@ def download_pdf():
     pdf_path = 'output.pdf'
     return send_file(pdf_path, as_attachment=True)
 
+@app.route('/download_video')
+def download_video():
+    video_path = 'analysis.mp4'
+    return send_file(video_path, as_attachment=True)
+
+@app.route('/download_excel')
+def download_excel():
+    excel_path = 'bees-datas.csv'
+    return send_file(excel_path, as_attachment=True)
+
+@app.route('/download')
+def download_page():
+    return render_template('download.html')
+
+
 
 @app.route("/upload", methods=['POST'])
 def upload():
@@ -28,9 +43,10 @@ def upload():
 
     circles_tab, circles_done_tab, temp_file_path, first_frame = services.detect_holes.detectHoles(video_file)
 
-    services.pdf_generation.create_pdf(video_file.filename, 30, "", first_frame, len(circles_tab), len(circles_done_tab))
-
     fps = detect_bees.procesarVideo(circles_tab, temp_file_path)
+
+    services.pdf_generation.create_pdf(video_file.filename, fps, "", first_frame, len(circles_tab), len(circles_done_tab))
+
 
 
     return render_template('download.html')

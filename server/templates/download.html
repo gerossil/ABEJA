@@ -60,10 +60,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Download last report</h1>
-        <p>Click the button below to download the PDF:</p>
-        <a href="{{ url_for('download_pdf') }}" download="output.pdf">Download</a>
-        <a class="back-link" href="/">Return to upload page</a>
+        <h1>Download Last Analysis Resources</h1>
+        <p>Click the links below to download the last resources:</p>
+        
+        <a href="{{ url_for('download_pdf') }}" download="output.pdf">Download PDF</a>
+        <a href="{{ url_for('download_video') }}" download="analysis.mp4">Download Video</a>
+        <a href="{{ url_for('download_excel') }}" download="bees-datas.csv">Download Excel</a>
+        
+        <a class="back-link" href="/">Return to Index</a>
 
     </div>
 </body>

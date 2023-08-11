@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import cv2
 import os
+import numpy as np
 
 
 # Exemple de données de requête de flux
@@ -37,7 +38,7 @@ def create_pdf(video_name, fps, date_range, photo, holes_count, closed_holes_cou
     # Ajouter l'en-tête au PDF
     c.setFont("Helvetica-Bold", 14)
     c.drawString(100, 750, "Video Name: " + video_name)
-    c.drawString(100, 730, "Frame Per Second: " + str(fps))
+    c.drawString(100, 730, "Frame Per Second: " + str(np.around(fps)))
     c.drawString(100, 710, "Date: " + date_range)
 
     filename = 'temp_photo.jpg'

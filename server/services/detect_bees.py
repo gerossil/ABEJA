@@ -45,8 +45,10 @@ def procesarVideo(holes: List[Hole], video):
 
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
-
-    with open(f'abejas-prueba-{str(start_time).replace(" ","").replace(":","-").replace(".","-")}.csv', mode='w') as file:
+    if os.path.exists("bees-datas.csv"):
+        os.remove("bees-datas.csv")
+        
+    with open(f'bees-datas.csv', mode='w') as file:
         employee_writer = csv.writer(file, delimiter=',')
 
         while True:
