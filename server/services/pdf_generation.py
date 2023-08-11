@@ -2,10 +2,11 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import matplotlib
 import matplotlib.pyplot as plt
-import io
-import datetime
 from PIL import Image
 import cv2
+import os
+import numpy as np
+
 
 # Exemple de données de requête de flux
 video_name = "My Video"
@@ -28,14 +29,16 @@ def create_graph():
     plt.savefig("graph.png")
 
 # Créer le PDF avec ReportLab
-def create_pdf(video_name, fps, date_range, photo):
+def create_pdf(video_name, fps, date_range, photo, holes_count, closed_holes_count):
+    if os.path.exists("output.pdf"):
+      os.remove("output.pdf")
     pdf_file = "output.pdf"
     c = canvas.Canvas(pdf_file, pagesize=letter)
 
     # Ajouter l'en-tête au PDF
     c.setFont("Helvetica-Bold", 14)
     c.drawString(100, 750, "Video Name: " + video_name)
-    c.drawString(100, 730, "Frame Per Second: " + str(fps))
+    c.drawString(100, 730, "Frame Per Second: " + str(np.around(fps)))
     c.drawString(100, 710, "Date: " + date_range)
 
     filename = 'temp_photo.jpg'
@@ -49,7 +52,7 @@ def create_pdf(video_name, fps, date_range, photo):
     target_height = (target_width * img_height) // img_width
 
     # Dessiner l'image avec la taille calculée
-    c.drawString(100, 680, "Nest and holes:")
+    c.drawString(100, 680, "Nest and holes: " + str(holes_count) + " open holes and " + str(closed_holes_count) + " closed holes" )
     c.drawImage(filename, 100, 710 - target_height - 50, width=target_width, height=target_height)
 
     # Générer le graphe
