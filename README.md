@@ -52,7 +52,7 @@
 
 ### Requirement Flask 
 
-    pip install Flask influxdb influxdb_client reportlab
+    pip install Flask influxdb influxdb_client reportlab moviepy
 
 ### Run Solution Flask 
     

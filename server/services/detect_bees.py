@@ -46,8 +46,9 @@ def procesarVideo(holes: List[Hole], video):
             results = model(frame, verbose=False)
             boxes = results[0].boxes.xyxy.tolist()
             holes_count = 0
-
+            break
             for box in boxes: 
+                
                 x_min, y_min, x_max, y_max = box
                 class_id = results[0].names[results[0].boxes[holes_count].cls[0].item()] #get type of objects in image (hole, holeDone, hotel)
                 if class_id == "Bees":
@@ -111,7 +112,7 @@ def procesarVideo(holes: List[Hole], video):
         #end of video
     #     create_pdf()
     cap.release()
-    return fps
+    return fps, holes
 
             
     cap.release()
