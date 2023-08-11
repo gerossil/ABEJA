@@ -58,7 +58,7 @@ def procesarVideo(holes: List[Hole], video):
             results = model(frame, verbose=False)
             boxes = results[0].boxes.xyxy.tolist()
             holes_count = 0
-            break
+          
             for box in boxes: 
                 
                 x_min, y_min, x_max, y_max = box
