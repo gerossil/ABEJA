@@ -52,11 +52,24 @@
         .form-button:hover {
             background-color: #45a049;
         }
+
+        .download-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .download-link:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Video Upload Form</h1>
+    <h1>Upload Video</h1>
     <div class="form-container">
         <form action="/upload" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -68,6 +81,7 @@
             </div>
         </form>
     </div>
+    <a class="download-link" href="/download">Go to Download Page</a>
 </body>
 
 </html>
