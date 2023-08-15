@@ -1,6 +1,6 @@
-train: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\train\images
-val: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\val\images
-test: C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\test\images
+train: C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\images
+val: C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\val\images
+test: C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\test\images
 
 nc: 1
 names: ['Bees']
