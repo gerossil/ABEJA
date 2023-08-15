@@ -8,19 +8,20 @@ from ultralytics import YOLO
 import influxdb_client, os, time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
-
+import uuid
 
 def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole], video):
     global cap, fgbg, kernel
     
     cap = cv2.VideoCapture(video)
-    model = YOLO('C:\\Users\\DEPTEC\\Documents\\abejas\\ABEJA\\photo_detection_bees\\runs\\detect\\train2\\weights\\best.pt')  # load a pretrained model
+    model = YOLO('/Users/malcolmneerman/dev/Abeja/ABEJA/photo_detection_bees/runs/detect/train2/weights/best.pt')  # load a pretrained model
 
     fgbg = cv2.createBackgroundSubtractorMOG2()
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_count = 0 #we need to count every frame to get the real time of entries and exits
     start_time = datetime.datetime.now()
+    analysis_id = uuid.uuid1()
 
     token = "my-token"
     org = "my-org"
@@ -55,7 +56,7 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole], video):
                     radius = np.uint16(np.around((x_max - x_min) / 2))
                     bees_tab.append(Hole("bee" + str(holes_count), center_x, center_y, radius + 5))#Radius + 5 to have a little bit larger area
                     #Draw circles with point at the center
-                    cv2.circle(frame, (center_x, center_y), radius, (0, 255, 0), 2)
+                    cv2.circle(frame, (center_x, center_y), radius, (0, 0, 255), 2)
 
                     holes_count += 1
                     for i, h in enumerate(holes):
@@ -72,7 +73,7 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole], video):
                             break
 
                         elif h.bee_inside: #if bee isn't currently in one of the hole but was, we check in the periphery of the hole
-                            periphery_hole = Hole("Hoyo Periphery",h.x, h.y, h.radius+15)
+                            periphery_hole = Hole("Hoyo Periphery",h.x, h.y, np.uint32(np.around(h.radius*1.15)))
                             if periphery_hole.isPointInside(center_x, center_y): #if bee was in a hole and is in periphery, we assume it is getting out
                                 #print("exit") 
                                 h.bee_inside = False
@@ -91,28 +92,20 @@ def procesarVideo(holes: List[Hole], peripherical_holes: List[Hole], video):
                                 duration_formatted = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
                                 print([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
-                                point = (
+                               
+                                if seconds > 1:
+                                    point = (
                                         Point("bees-actions")
+                                        .field("analysisId", str(analysis_id))
                                         .field("entryTime", h.entry_time.strftime("%m/%d/%Y, %H:%M:%S:%f"))
                                         .field("exitTime", exit_time.strftime("%m/%d/%Y, %H:%M:%S:%f"))
+                                        .field("duration", duration_formatted)
                                         .field("holeId", h.name)
                                     )
-                                write_api.write(bucket=bucket, org="my-org", record=point)
-                                query_api = client.query_api()
+                                    write_api.write(bucket=bucket, org="my-org", record=point)
+                                    query_api = client.query_api()
 
-                                employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
-                               
-                                # if seconds > 1:
-                                #     point = (
-                                #         Point("bees-actions")
-                                #         .field("entryTime", h.entry_time)
-                                #         .field("exitTime", exit_time)
-                                #         .field("holeId", h.name)
-                                #     )
-                                #     write_api.write(bucket=bucket, org="my-org", record=point)
-                                #     query_api = client.query_api()
-
-                                    #employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
+                                    employee_writer.writerow([f'Entry : {h.entry_time}', f'Exit : {exit_time}', f'duration: {duration_formatted}', f'Hoyo: {h.name}'])
                                 h.entry_time = None
                                 break
 
