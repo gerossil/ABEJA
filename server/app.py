@@ -56,12 +56,7 @@ def upload():
     formatted_date = creation_datetime.strftime("%Y-%m-%d %H:%M:%S")
     print("##############", formatted_date)
 
-
-        
-
-   
-
-    #fps = detect_bees.procesarVideo(circles_tab, temp_file_path)
+    fps = detect_bees.procesarVideo(circles_tab, temp_file_path)
 
     
     services.pdf_generation.create_pdf(video_file.filename, 30, formatted_date, first_frame, len(circles_tab), len(circles_done_tab))
