@@ -2,13 +2,13 @@ import cv2
 import os
 
 # Path to the video file
-video_path = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v3.mp4'
+video_path = 'C:\\Users\\UMFRAB\\Documents\\ABEJA\\photo_tracking\\bees_v9.mp4'
 
 # Open the video file
 video = cv2.VideoCapture(video_path)
 
 # Create a directory to store the frames
-output_dir = 'C:\\Users\\LABSIS\\Documents\\ABEJA\\photo_detection_bees\\bees_v3'
+output_dir = 'C:\\Users\\UMFRAB\\Documents\\ABEJA\\photo_detection_bees\\bees\\bees_v9'
 os.makedirs(output_dir, exist_ok=True)
 
 # Read and save frames until the video ends
@@ -20,7 +20,7 @@ while video.isOpened():
         break
 
     # Save the frame as an image file
-    frame_path = os.path.join(output_dir, f"frame_{frame_count}.jpg")
+    frame_path = os.path.join(output_dir, f"bees_v9_{frame_count}.jpg")
     cv2.imwrite(frame_path, frame)
 
     frame_count += 1
