@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Video</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,16 +73,37 @@
 <body>
     <h1>Upload Video</h1>
     <div class="form-container">
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/upload" method="post" enctype="multipart/form-data" id="video-form">
             <div class="form-group">
                 <label for="video">Select a video:</label>
                 <input type="file" id="video" name="video" accept="video/*" class="form-input" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Upload" class="form-button">
+                <input type="submit" value="Upload" class="form-button" id="trigger-button">
             </div>
         </form>
     </div>
+    <div id="loading-banner" style="display: none;">Traitement en cours...</div>
+    <script>
+        function showLoadingPopup() {
+            Swal.fire({
+                title: 'Processing',
+                text: 'Please Wait ...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
+    
+        function hideLoadingPopup() {
+            Swal.close();
+        }
+    
+        document.getElementById('trigger-button').addEventListener('click', function () {
+            showLoadingPopup();
+        });
+    </script>        
     <a class="download-link" href="/download">Go to Download Page</a>
 </body>
 
