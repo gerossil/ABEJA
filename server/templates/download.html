@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bees actions report download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+        
+        .back-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            display: inline-block;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Download Last Analysis Resources</h1>
+        <p>Click the links below to download the last resources:</p>
+        
+        <a href="{{ url_for('download_pdf') }}" download="output.pdf">Download PDF</a>
+        <a href="{{ url_for('download_video') }}" download="analysis.mp4">Download Video</a>
+        <a href="{{ url_for('download_excel') }}" download="bees-datas.csv">Download Excel</a>
+        
+        <a class="back-link" href="/">Return to Index</a>
+
+    </div>
+</body>
+</html>

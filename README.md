@@ -2,7 +2,7 @@
 
 ## REQUIREMENT 
 
-    Application : GIT, Python, Anaconda
+    Application : GIT, Python, Anaconda, Docker
 
 ### CONFIGURATION 
 
@@ -63,7 +63,24 @@
     !Yolo training pour les abeilles 
     cd C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees
     yolo task=detect  mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train2\weights\best.pt"  imgsz=640   
-
-
+    
     !Yolo resume a training of bees
     yolo task=detect mode=train resume data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train6\weights\last.pt"  imgsz=640 
+
+  
+### Requirement Flask 
+
+    pip install Flask influxdb influxdb_client reportlab moviepy
+
+### Run Solution Flask 
+    
+    flask --app app.py run --reload
+
+### Run Solution Docker
+
+    docker compose up -d
+    influx setup --name myinfluxdb2 --host http://localhost:8086 \
+    -u admin -p admin54321 -o my-org \
+    -b my-bucket -t my-token -r 0 -f
+
+    Add grafana data source
