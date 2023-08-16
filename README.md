@@ -2,38 +2,49 @@
 
 ## REQUIREMENT 
 
-    Application : GIT, Python, Anaconda, Docker
+You'll need the following applications installed:
+
+* GIT
+* Python
+* Anaconda
+* Docker
 
 ### CONFIGURATION 
 
 #### GIT 
 
-    git config --global user.email "leo.gerossier38@gmail.com"
-    git config --global user.name "Leo Gerossier"
+Configure your global GIT user email and name:
+
+    git config --global user.email "Mame@provider.com"
+    git config --global user.name "Name"
 
 
-#### Python sans environnement virtuelle 
+#### Python without virtual environment
 
-    pip install simple_image_download==0.4   
+Install a specific version of the simple_image_download package:
 
-
-
+pip install simple_image_download==0.4
 
 #### CONDA 
 
-    !Création de l´environnement CONDA pour le training de Yolo : 
+Create a Conda environment named "yolov8_custom" with Python 3.9: 
+    
     conda create -n  yolov8_custom python=3.9
 
-    !Pour activer L´environnement de Yolo
+
+Activate the "yolov8_custom" Conda environment:
+
     conda activate yolov8_custom  
 
 
-    !Pour installer les dependances
+Install dependencies using pip:
+   
     pip install ultralytics
     pip install labelIMG  
 
 
-    !Pour desactiver Conda 
+Deactivate the Conda environment:
+
     conda deactivate yolov8_custom  
 
 
@@ -41,58 +52,64 @@
 
 ##### TRAINING YOLO  
 
-    Explication LabelImage 
+Explanation of LabelImage:
 
-    Premier Argument : Chemin vers les images d'entrainement 
-    Deuxieme Arguement : Chemin vers les classes à charger pour une cohérences des données sinon les labels ont des risques de dériver.
-    Troisième argument : Chemin d'enregistrement des fichiers labels de chaque image
+* First Argument: Path to training images
+* Second Argument: Path to classes file for data consistency
+* Third Argument: Path to save label files for each image
 
-    !Label d'image pour les trous vides/finis et les hotels 
-    labelIMG "C:\Users\UMFRAB\Documents\ABEJA\photo_detection\train\images" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection\train\labels\classes.txt" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection\train\labels"
+Label images for different classes:
+
+  *  Example for empty/finished holes and hotels
     
-    !Label d'image pour les abeilles 
-    labelIMG "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\images" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\labels\classes.txt" "C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\train\labels"
+    labelIMG "path_to_train_images" "path_to_classes.txt" "path_to_labels_directory"
+
+  *  Example for bees
     
-    !Yolo training pour les trous vides/finis et les hotels
-    cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection
-    yolo task=detect mode=train epochs=20 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection\runs\detect\train8\weights\best.pt" imgsz=640   
+    labelIMG "path_to_train_images" "path_to_classes.txt" "path_to_labels_directory"
 
-
-
-    !Yolo training pour les abeilles 
-    cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect  mode=train epochs=20 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train2\weights\best.pt"  imgsz=640   
-
-    !Yolo training pour les abeilles 
-    cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect  mode=train epochs=200 data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train9\weights\best.pt"  imgsz=640   
-
-    !Yolo resume a training of bees
-    cd C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees
-    yolo task=detect mode=train resume data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train10\weights\last.pt"  imgsz=640 
-
-    yolo task=detect mode=train resume data="/root/ABEJA/photo_detection_bees/data_custom_linux.yaml" model="/root/ABEJA/photo_detection_bees/runs/detect/train9/weights/last.pt"  imgsz=640 
-
-    cd C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees
-    yolo task=detect  mode=train epochs=20 data="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\LABSIS\Documents\ABEJA\photo_detection_bees\runs\detect\train2\weights\best.pt"  imgsz=640   
-
-    !Yolo resume a training of bees
-    yolo task=detect mode=train resume data="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\data_custom.yaml" model="C:\Users\UMFRAB\Documents\ABEJA\photo_detection_bees\runs\detect\train6\weights\last.pt"  imgsz=640 
-
+# Perform YOLO training for different classes:
   
-### Requirement Flask 
+  *  Example for empty/finished holes and hotels
+        
+    cd path_to_photo_detection
+    yolo task=detect mode=train epochs=20 data="path_to_data_custom.yaml" model="path_to_best.pt" imgsz=640
+
+  *  Example for bees
+    
+    cd path_to_photo_detection_bees
+    yolo task=detect mode=train epochs=20 data="path_to_data_custom.yaml" model="path_to_best.pt" imgsz=640
+
+ *   Resume training
+
+    cd path_to_photo_detection_bees
+    yolo task=detect mode=train resume data="path_to_data_custom.yaml" model="path_to_last.pt" imgsz=640
+
+    
+  
+### Flask Requirement
+
+Install required packages for the Flask application:
 
     pip install Flask influxdb influxdb_client reportlab moviepy
 
 ### Run Solution Flask 
+
+Run the Flask application:
+
     
     flask --app app.py run --reload
 
 ### Run Solution Docker
+
+Run the Docker container using Docker Compose:
+
+   * Setup InfluxDB :
 
     docker compose up -d
     influx setup --name myinfluxdb2 --host http://localhost:8086 \
     -u admin -p admin54321 -o my-org \
     -b my-bucket -t my-token -r 0 -f
 
-    Add grafana data source
+ 
+Please replace the placeholders like path_to_... with the actual paths and names of your files and directories. Make sure to have the necessary permissions and access to execute these commands.
